@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+  <title>Facebook Share To</title>
+  
+  <script type='text/javascript' src='http://code.jquery.com/jquery-1.8.3.js'></script>
+
+      <link rel="stylesheet" type="text/css" href="http://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css">
+    
+  
+  <style type='text/css'>
+    * {
+    margin: 0px;
+    padding: 0px;
+    text-decoration:none;
+    -moz-transition: all 0.5s ease 0s;
+    -o-transition: all 0.5s ease 0s;
+    -webkit-transition: all 0.5s ease 0s;
+    transition: all 0.5s ease 0s;
+}
+body {
+    background:rgb(249, 249, 249);
+    font-family:"Lato", Calibri, Arial, sans-serif;
+}
+.container > div > p {
+    text-align: center;
+    margin:40px auto;   
+}
+.fsl, content-download {
+    display: table;
+    margin:40px auto;
+    padding: 6px;
+    border-radius: 2px;
+    opacity: 0.6;
+}
+.fsl-facebook {
+    background:#14A0E9;
+}
+.content-download {
+    background:#6DC118;
+    display: none;
+}
+.content-download.unlocked {
+    display: table;
+}
+.fsl span {
+    color: #FFF;
+}
+.fa-icons {
+    font-family: FontAwesome;
+    font-size: 20px;
+    color: #FFF;
+}
+.fsl:hover {
+    opacity: 1;
+}
+.hidden {
+    display: none;
+    opacity: 0;
+}
+  </style>
+  
+
+
+<script type='text/javascript'>//<![CDATA[ 
+$(window).load(function(){
+/**
+ * Copyright 2014 Facebook "Share to Download" by Adam Azad (AdamA)
+ * Licensed under the Apache License, Version 2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
+ **/
+$(document).ready(function () {
+
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId      : '553435274702353',
+          version    : 'v2.0'
+        });
+      };   
+    $('#facebook-share').on('click', function() {
+      /** display the share dialog and wait for the response **/
+      setTimeout(function(){ $('p').addClass('hidden') }, 1500);
+      FB.ui({
+            display: 'popup',
+            method:  'share',
+            href: 'https://developers.facebook.com/docs/',
+            },
+            /** our callback **/
+            function(response) {
+    			     if (response && response.post_id) {
+    			        /** the user shared the content on their Facebook, go ahead and continue to download **/
+                         $('p:eq(1)').removeClass('hidden');
+                         $('p:eq(0), #facebook-share').addClass('hidden');
+                         $('#download-file').addClass('unlocked');
+    			     } else {
+    			        /** the cancelled the share process, do something, for example **/
+                         $('p:eq(2)').removeClass('hidden');
+    				 }
+            });
+        
+     });
+});
+
+// Load the SDK
+(function(d, s, id){
+  var js, fjs = d.getElementsByTagName(s)[0];
+  if (d.getElementById(id)) {return;}
+  js = d.createElement(s); js.id = id;
+  js.src = "//connect.facebook.net/en_US/sdk.js";
+  fjs.parentNode.insertBefore(js, fjs);
+}(document, 'script', 'facebook-jssdk'));
+});//]]>  
+
+</script>
+
+
+</head>
+<body>
+  <div class="container">
+    
+    <div>
+       <p>This file is locked, to unlock and download it, share it</p>
+       <p class="hidden">Thanks for sharing, the file is unlocked and ready for download</p>
+       <p class="hidden">In order to download this file, you need to share it</p>
+    </div>
+    <a class="fsl fsl-facebook" href="#" id="facebook-share">
+       <span class="fa-facebook fa-icons fa-lg"></span>
+       <span class="sc-label">Share on Facebook</span>
+    </a>
+
+    <a class="fsl content-download" href="#" id="download-file">
+       <span class="fa-download fa-icons fa-lg"></span>
+       <span class="sc-label">Download File</span>
+    </a>
+    
+</div>
+
+<div id="fb-root"></div>
+
+  
+</body>
+
+
+</html>
